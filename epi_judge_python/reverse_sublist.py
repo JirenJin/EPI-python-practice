@@ -3,22 +3,17 @@ from list_node import ListNode
 
 
 def reverse_sublist(L, start, finish):
-    if not L:
-        return L
     curr = dummy = ListNode()
     dummy.next = L
     for _ in range(start - 1):
         curr = curr.next
-    begin = curr
-    stack = []
-    for _ in range(finish - start + 1):
-        stack.append(curr.next)
-        curr = curr.next
-    end = curr.next
-    for node in reversed(stack):
-        begin.next = node
-        begin = begin.next
-    begin.next = end
+    sublist_head = curr
+    sublist_tail = sublist_head.next
+    for _ in range(finish - start):
+        next_next = sublist_tail.next
+        sublist_tail.next = next_next.next
+        next_next.next = sublist_head.next
+        sublist_head.next = next_next
     return dummy.next
 
 
