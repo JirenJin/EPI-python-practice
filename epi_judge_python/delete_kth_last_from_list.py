@@ -4,17 +4,15 @@ from list_node import ListNode
 
 # Assumes L has at least k nodes, deletes the k-th last node in L.
 def remove_kth_last(L, k):
-    count = 0
-    dummy_head = ListNode(None)
-    dummy_head.next = L
-    target = dummy_head
-    while L:
-        if count < k:
-            count += 1
-        else:
-            target = target.next
-        L = L.next
-    target.next = target.next.next
+    dummy_head = ListNode(None, L)
+    pre = dummy_head
+    curr = L
+    for _ in range(k):
+        curr = curr.next
+    while curr:
+        pre = pre.next
+        curr = curr.next
+    pre.next = pre.next.next
     return dummy_head.next
 
 
