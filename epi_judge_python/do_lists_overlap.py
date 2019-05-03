@@ -6,8 +6,63 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def overlapping_lists(l0, l1):
-    # TODO - you fill in here.
-    return None
+    def has_cycle(head):
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if slow is fast:
+                s1 = head
+                s2 = slow
+                while s1 is not s2:
+                    s1, s2 = s1.next, s2.next
+                return s1
+        return None
+
+    def list_len(head, terminate=None):
+        count = 0
+        while head is not terminate:
+            count += 1
+            head = head.next
+        return count
+
+    def is_overlap(l0, l1, t1=None, t2=None):
+        len1, len2 = list_len(l0, t1), list_len(l1, t2)
+        if len1 > len2:
+            for _ in range(len1 - len2):
+                l0 = l0.next
+        else:
+            for _ in range(len2 - len1):
+                l1 = l1.next
+        while l0 is not t1:
+            if l0 is l1:
+                return l0
+            l0, l1 = l0.next, l1.next
+        return None
+        
+
+    c1 = has_cycle(l0)
+    c2 = has_cycle(l1)
+    if c1 is None and c2 is None:
+        return is_overlap(l0, l1)
+    elif c1 is None and c2 or c1 and c2 is None:
+        return None
+    else:
+        cand = is_overlap(l0, l1, c1, c2)
+        if cand:
+            return cand
+        else:
+            if c1 is c2:
+                return c2
+            it = c2.next
+            while it and it is not c2:
+                if it is c1:
+                    return c2
+                it = it.next
+            return None
+
+
+        
 
 
 @enable_executor_hook
