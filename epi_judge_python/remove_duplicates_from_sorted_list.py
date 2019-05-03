@@ -3,13 +3,12 @@ from list_node import ListNode
 
 
 def remove_duplicates(L):
-    pre = dummy_head = ListNode(None, L)
-    while pre.next:
-        if pre.next.data == pre.data:
-            pre.next = pre.next.next
-        else:
-            pre = pre.next
-    return dummy_head.next
+    curr = L
+    while curr:
+        while curr.next and curr.next.data == curr.data:
+            curr.next = curr.next.next
+        curr = curr.next
+    return L
 
 
 if __name__ == '__main__':
