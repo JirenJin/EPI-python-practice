@@ -1,9 +1,15 @@
 from test_framework import generic_test
+from list_node import ListNode
 
 
 def remove_duplicates(L):
-    # TODO - you fill in here.
-    return None
+    pre = dummy_head = ListNode(None, L)
+    while pre.next:
+        if pre.next.data == pre.data:
+            pre.next = pre.next.next
+        else:
+            pre = pre.next
+    return dummy_head.next
 
 
 if __name__ == '__main__':
