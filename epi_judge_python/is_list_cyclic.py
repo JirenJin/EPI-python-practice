@@ -13,6 +13,13 @@ def has_cycle(head):
     #     seen.add(head)
     #     head = head.next
     # return False
+    def cycle_len(node):
+        curr, count = node, 1
+        while curr.next is not node:
+            curr = curr.next
+            count += 1
+        return count
+
     slow = fast = head
     while fast and fast.next:
         fast = fast.next.next
@@ -23,7 +30,10 @@ def has_cycle(head):
     else:
         return None
     s1 = head
-    s2 = intersection
+    s2 = head
+    for _ in range(cycle_len(intersection)):
+        s2 = s2.next
+        
     while s1 is not s2:
         s1 = s1.next
         s2 = s2.next
