@@ -6,8 +6,28 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def has_cycle(head):
-    # TODO - you fill in here.
-    return None
+    # seen = set()
+    # while head:
+    #     if head in seen:
+    #         return True
+    #     seen.add(head)
+    #     head = head.next
+    # return False
+    slow = fast = head
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+        if slow is fast:
+            intersection = slow
+            break
+    else:
+        return None
+    s1 = head
+    s2 = intersection
+    while s1 is not s2:
+        s1 = s1.next
+        s2 = s2.next
+    return s1
 
 
 @enable_executor_hook
